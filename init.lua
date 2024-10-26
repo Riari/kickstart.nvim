@@ -887,7 +887,7 @@ require('lazy').setup({
 
       vim.cmd.colorscheme 'palenight'
 
-      vim.api.nvim_set_hl(0, 'Normal', { fg = '#bfc7d5', bg = '#292d3e' })
+      vim.api.nvim_set_hl(0, 'Normal', { fg = '#bfc7d5', bg = 'none' })
       vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#424864' })
       vim.api.nvim_set_hl(0, 'WinBar', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'none' })
@@ -1007,6 +1007,9 @@ require('lazy').setup({
       direction = 'vertical',
       shading_factor = '0',
       shading_ratio = '0',
+      highlights = {
+        Normal = { guibg = 'none' },
+      },
     },
   },
 
