@@ -22,7 +22,6 @@ return {
     'jay-babu/mason-nvim-dap.nvim',
 
     -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
     'julianolf/nvim-dap-lldb',
   },
   keys = function(_, keys)
@@ -50,6 +49,7 @@ return {
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
+    local daplldb = require 'dap-lldb'
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -64,29 +64,7 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
-      },
-    }
-
-    -- Dap UI setup
-    -- For more information, see |:help nvim-dap-ui|
-    dapui.setup {
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      controls = {
-        icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
-        },
+        'lldb',
       },
     }
 
@@ -94,15 +72,27 @@ return {
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-    -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
+    dapui.setup()
 
-    require('dap-lldb').setup {}
+    daplldb.setup {}
+
+    vim.api.nvim_set_hl(0, 'DapUIPlayPauseNC', { link = 'WinBar' })
+    vim.api.nvim_set_hl(0, 'DapUIRestartNC', { link = 'WinBar' })
+    vim.api.nvim_set_hl(0, 'DapUIStopNC', { link = 'WinBar' })
+    vim.api.nvim_set_hl(0, 'DapUIUnavailableNC', { link = 'WinBar' })
+    vim.api.nvim_set_hl(0, 'DapUIStepOverNC', { link = 'WinBar' })
+    vim.api.nvim_set_hl(0, 'DapUIStepIntoNC', { link = 'WinBar' })
+    vim.api.nvim_set_hl(0, 'DapUIStepBackNC', { link = 'WinBar' })
+    vim.api.nvim_set_hl(0, 'DapUIStepOutNC', { link = 'WinBar' })
+
+    vim.api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg = 0, fg = '#ff869a', bg = '#212432' })
+    vim.api.nvim_set_hl(0, 'DapLogPoint', { ctermbg = 0, fg = '#82b1ff', bg = '#212432' })
+    vim.api.nvim_set_hl(0, 'DapStopped', { ctermbg = 0, fg = '#c3e88d', bg = '#212432' })
+
+    vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+    vim.fn.sign_define('DapBreakpointCondition', { text = 'ﳁ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+    vim.fn.sign_define('DapBreakpointRejected', { text = '', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+    vim.fn.sign_define('DapLogPoint', { text = '', texthl = 'DapLogPoint', linehl = 'DapLogPoint', numhl = 'DapLogPoint' })
+    vim.fn.sign_define('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
   end,
 }

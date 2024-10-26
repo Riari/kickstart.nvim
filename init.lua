@@ -107,7 +107,6 @@ end
 
 vim.opt.background = 'dark'
 
-
 if vim.fn.has 'win32' == 1 then
   vim.opt.shell = 'pwsh'
   vim.opt.shellcmdflag = '-nologo -noprofile -ExecutionPolicy RemoteSigned -command'
@@ -667,6 +666,9 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'codelldb',
+        'clangd',
+        'clang-format',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -852,9 +854,19 @@ require('lazy').setup({
     'alexmozaidze/palenight.nvim',
     priority = 1000,
     init = function()
+      local colors = require 'palenight/colors/truecolor'
+      colors.cursor = '#212432'
+
       vim.cmd.colorscheme 'palenight'
 
-      vim.cmd.hi 'WinSeparator guifg=#424864'
+      vim.api.nvim_set_hl(0, 'Normal', { fg = '#bfc7d5', bg = '#292d3e' })
+      vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#424864' })
+      vim.api.nvim_set_hl(0, 'WinBar', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'none' })
+      --vim.cmd.hi 'WinSeparator guifg=#424864'
+      --vim.cmd.hi 'WinBar guibg=none'
+      --vim.cmd.hi 'WinBarNC guibg=none'
+      --vim.cmd.hi 'DapUINormal guibg=none'
     end,
   },
 
@@ -862,7 +874,12 @@ require('lazy').setup({
     'rcarriga/nvim-notify',
     opts = {
       transparent = true,
-    }
+    },
+  },
+
+  {
+    'numToStr/Comment.nvim',
+    opts = {},
   },
 
   -- Highlight todo, notes, etc in comments
@@ -933,26 +950,26 @@ require('lazy').setup({
 
   {
     'stevearc/overseer.nvim',
-    opts = {}
+    opts = {},
   },
 
   {
     'Civitasv/cmake-tools.nvim',
-    opts = {}
+    opts = {},
   },
 
   {
     'akinsho/toggleterm.nvim',
     version = '*',
     opts = {
-      size = function (term)
+      size = function(term)
         return vim.o.columns * 0.3
       end,
       open_mapping = [[<c-\>]],
       direction = 'vertical',
       shading_factor = '0',
       shading_ratio = '0',
-    }
+    },
   },
 
   {
@@ -960,8 +977,8 @@ require('lazy').setup({
     opts = {
       view = {
         preserve_window_proportions = true,
-      }
-    }
+      },
+    },
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
