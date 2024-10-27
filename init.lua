@@ -506,7 +506,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      --{ 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -896,9 +896,42 @@ require('lazy').setup({
 
   {
     'rcarriga/nvim-notify',
-    opts = {
-      transparent = true,
-    },
+    config = function()
+      local notify = require 'notify'
+      vim.notify = notify
+
+      notify.setup {
+        background_colour = '#000000',
+        render = 'wrapped-compact',
+        stages = 'fade',
+        level = vim.log.levels.INFO,
+        timeout = 5000,
+        max_width = 200,
+        max_height = 100,
+        on_open = function() end,
+        on_close = function() end,
+        minimum_width = 50,
+        fps = 30,
+        top_down = true,
+        time_formats = {
+          notification_history = '%FT%T',
+          notification = '%T',
+        },
+        icons = {
+          ERROR = '',
+          WARN = '',
+          INFO = '',
+          DEBUG = '',
+          TRACE = '✎',
+        },
+      }
+    end,
+  },
+
+  {
+    'mrded/nvim-lsp-notify',
+    requires = { 'rcarriga/nvim-notify' },
+    opts = {},
   },
 
   {
