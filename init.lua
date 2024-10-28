@@ -432,6 +432,17 @@ require('lazy').setup({
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+          file_ignore_patterns = {
+            'node_modules',
+            '.git',
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -447,7 +458,7 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -478,6 +489,24 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+    end,
+  },
+
+  {
+    'EthanJWright/vs-tasks.nvim',
+    dependencies = {
+      'nvim-lua/popup.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+    config = function()
+      local vstask = require('telescope').extensions.vstask
+      vim.keymap.set('n', '<leader>ta', vstask.tasks)
+      vim.keymap.set('n', '<leader>ti', vstask.inputs)
+      vim.keymap.set('n', '<leader>th', vstask.history)
+      vim.keymap.set('n', '<leader>tl', vstask.launch)
+      vim.keymap.set('n', '<leader>tj', vstask.jobs)
+      vim.keymap.set('n', '<leader>t;', vstask.jobhistory)
     end,
   },
 
@@ -1013,6 +1042,18 @@ require('lazy').setup({
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
+    config = function()
+      ---@class ParserConfig[]
+      local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+      parser_config.odin = {
+        install_info = {
+          url = 'https://github.com/ap29600/tree-sitter-odin',
+          branch = 'main',
+          files = { 'src/parser.c' },
+        },
+        filetype = 'odin',
+      }
+    end,
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
     --
@@ -1044,15 +1085,6 @@ require('lazy').setup({
       shading_ratio = '0',
       highlights = {
         Normal = { guibg = 'none' },
-      },
-    },
-  },
-
-  {
-    'nvim-tree/nvim-tree.lua',
-    opts = {
-      view = {
-        preserve_window_proportions = true,
       },
     },
   },
