@@ -665,6 +665,8 @@ require('lazy').setup({
 
         astro = {},
 
+        phpactor = {},
+
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},

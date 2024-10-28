@@ -65,27 +65,13 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'lldb',
+        'php-debug-adapter',
       },
     }
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    dap.adapters.php = {
-      type = 'executable',
-      command = 'node',
-      args = { '~/dev/vscode-php-debug/out/phpDebug.js' },
-    }
-
-    dap.configurations.php = {
-      {
-        type = 'php',
-        request = 'launch',
-        name = 'Listen for Xdebug',
-        port = 9003,
-      },
-    }
 
     dapui.setup()
 
