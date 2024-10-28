@@ -1026,8 +1026,10 @@ require('lazy').setup({
         'luadoc',
         'markdown',
         'markdown_inline',
+        'odin',
         'php',
         'query',
+        'rust',
         'vim',
         'vimdoc',
       },
@@ -1042,18 +1044,6 @@ require('lazy').setup({
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
-    config = function()
-      ---@class ParserConfig[]
-      local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-      parser_config.odin = {
-        install_info = {
-          url = 'https://github.com/ap29600/tree-sitter-odin',
-          branch = 'main',
-          files = { 'src/parser.c' },
-        },
-        filetype = 'odin',
-      }
-    end,
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
     --
@@ -1085,6 +1075,44 @@ require('lazy').setup({
       shading_ratio = '0',
       highlights = {
         Normal = { guibg = 'none' },
+      },
+    },
+  },
+
+  {
+    'folke/trouble.nvim',
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = 'Trouble',
+    keys = {
+      {
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Diagnostics (Trouble)',
+      },
+      {
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics (Trouble)',
+      },
+      {
+        '<leader>cs',
+        '<cmd>Trouble symbols toggle focus=false<cr>',
+        desc = 'Symbols (Trouble)',
+      },
+      {
+        '<leader>cl',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = 'LSP Definitions / references / ... (Trouble)',
+      },
+      {
+        '<leader>xL',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List (Trouble)',
+      },
+      {
+        '<leader>xQ',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = 'Quickfix List (Trouble)',
       },
     },
   },
