@@ -107,9 +107,13 @@ end
 
 vim.opt.background = 'dark'
 
-if vim.fn.has 'win32' == 1 then
+if (vim.fn.has 'win32') == 1 then
   vim.opt.shell = 'pwsh'
-  vim.opt.shellcmdflag = '-nologo -noprofile -ExecutionPolicy RemoteSigned -command'
+  vim.opt.shellcmdflag =
+    "-NoProfile -NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';$PSStyle.OutputRendering = [System.Management.Automation.OutputRendering]::PlainText;"
+  vim.opt.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+  vim.opt.shellpipe = '2>&1 | %%{ "$_" } | Tee-Object %s; exit $LastExitCode'
+  vim.opt.shellquote = ''
   vim.opt.shellxquote = ''
 end
 
@@ -1050,6 +1054,53 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  },
+
+  {
+    'Badhi/nvim-treesitter-cpp-tools',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    -- Optional: Configuration
+    opts = function()
+      local options = {
+        preview = {
+          quit = 'q', -- optional keymapping for quit preview
+          accept = '<tab>', -- optional keymapping for accept preview
+        },
+        header_extension = 'h', -- optional
+        source_extension = 'cpp', -- optional
+        custom_define_class_function_commands = { -- optional
+          TSCppImplWrite = {
+            output_handle = require('nt-cpp-tools.output_handlers').get_add_to_cpp(),
+          },
+          --[[
+                <your impl function custom command name> = {
+                    output_handle = function (str, context) 
+                        -- string contains the class implementation
+                        -- do whatever you want to do with it
+                    end
+                }
+                ]]
+        },
+      }
+      return options
+    end,
+    -- End configuration
+    config = true,
+  },
+
+  {
+    'tpope/vim-dispatch',
+    opts = {},
+    config = function() end,
+  },
+
+  {
+    'zadirion/Unreal.nvim',
+    requires = {
+      'tpope/vim-dispatch',
+    },
+    opts = {},
+    config = function() end,
   },
 
   {
