@@ -718,6 +718,11 @@ require('lazy').setup({
         },
       }
 
+      require('lspconfig')['gdscript'].setup {
+        name = 'godot',
+        cmd = { 'ncat', '127.0.0.1', '6005' },
+      }
+
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
       --  other tools, you can run
