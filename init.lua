@@ -700,6 +700,8 @@ require('lazy').setup({
 
         phpactor = {},
 
+        omnisharp = {},
+
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -1165,6 +1167,14 @@ require('lazy').setup({
         '<cmd>Trouble qflist toggle<cr>',
         desc = 'Quickfix List (Trouble)',
       },
+    },
+  },
+
+  {
+    'seblj/roslyn.nvim',
+    ft = 'cs',
+    opts = {
+      -- your configuration comes here; leave empty for default settings
     },
   },
 
