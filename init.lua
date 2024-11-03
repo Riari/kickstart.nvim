@@ -290,8 +290,8 @@ require('lazy').setup({
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
         mapping = cmp.mapping.preset.insert {
-          ['<C-d>'] = cmp.mapping.select_next_item(),
-          ['<C-s>'] = cmp.mapping.select_prev_item(),
+          ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+          ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-a>'] = cmp.mapping.confirm { select = true },
@@ -325,14 +325,6 @@ require('lazy').setup({
         }, {
           { name = 'cmdline' },
         }),
-        matching = {
-          disallow_fuzzy_matching = false,
-          disallow_partial_matching = false,
-          disallow_prefix_unmatching = false,
-          disallow_fullfuzzy_matching = false,
-          disallow_partial_fuzzy_matching = false,
-          disallow_symbol_nonprefix_matching = false,
-        },
       })
     end,
   },
