@@ -274,6 +274,7 @@ require('lazy').setup({
       },
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-path',
     },
     config = function()
@@ -316,6 +317,23 @@ require('lazy').setup({
           { name = 'path' },
         },
       }
+
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' },
+        }, {
+          { name = 'cmdline' },
+        }),
+        matching = {
+          disallow_fuzzy_matching = false,
+          disallow_partial_matching = false,
+          disallow_prefix_unmatching = false,
+          disallow_fullfuzzy_matching = false,
+          disallow_partial_fuzzy_matching = false,
+          disallow_symbol_nonprefix_matching = false,
+        },
+      })
     end,
   },
 
