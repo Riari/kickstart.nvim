@@ -481,7 +481,32 @@ require('lazy').setup({
 
   {
     'Civitasv/cmake-tools.nvim',
-    opts = {},
+    opts = {
+      cmake_dap_configuration = {
+        name = 'cpp',
+        type = 'codelldb',
+        request = 'launch',
+        stopOnEntry = false,
+        runInTerminal = true,
+        console = 'integratedTerminal',
+      },
+      cmake_runner = {
+        name = 'toggleterm',
+        opts = {
+          name = 'Main Terminal',
+          prefix_name = '[CMakeTools]: ',
+          split_direction = 'horizontal',
+          split_size = 11,
+          single_terminal_per_instance = true,
+          single_terminal_per_tab = true,
+          keep_terminal_static_location = true,
+          auto_resize = false,
+          start_insert = false,
+          focus = true,
+          do_not_add_newline = false,
+        },
+      },
+    },
   },
 
   {
