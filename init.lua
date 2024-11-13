@@ -93,6 +93,10 @@ vim.keymap.set('n', '<A-1>', ':ToggleTerm 1<CR>')
 vim.keymap.set('n', '<A-2>', ':ToggleTerm 2<CR>')
 vim.keymap.set('n', '<A-3>', ':ToggleTerm 3<CR>')
 
+vim.keymap.set('n', '<leader>CB', ':CMakeBuild<CR>')
+vim.keymap.set('n', '<leader>CD', ':CMakeDebug<CR>')
+vim.keymap.set('n', '<leader>CR', ':CMakeRun<CR>')
+
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
@@ -129,7 +133,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   'tpope/vim-sleuth',
-
   {
     'lewis6991/gitsigns.nvim',
     opts = {
