@@ -93,9 +93,9 @@ vim.keymap.set('n', '<A-1>', ':ToggleTerm 1<CR>')
 vim.keymap.set('n', '<A-2>', ':ToggleTerm 2<CR>')
 vim.keymap.set('n', '<A-3>', ':ToggleTerm 3<CR>')
 
-vim.keymap.set('n', '<leader>CB', ':CMakeBuild<CR>')
-vim.keymap.set('n', '<leader>CD', ':CMakeDebug<CR>')
-vim.keymap.set('n', '<leader>CR', ':CMakeRun<CR>')
+vim.keymap.set('n', '<leader>cc', ':Task start cmake configure<CR>')
+vim.keymap.set('n', '<leader>cd', ':Task start cmake debug<CR>')
+vim.keymap.set('n', '<leader>cr', ':Task start cmake run<CR>')
 
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
@@ -483,33 +483,33 @@ require('lazy').setup({
   },
 
   {
-    'Civitasv/cmake-tools.nvim',
-    opts = {
-      cmake_dap_configuration = {
-        name = 'cpp',
-        type = 'codelldb',
-        request = 'launch',
-        stopOnEntry = false,
-        runInTerminal = true,
-        console = 'integratedTerminal',
-      },
-      cmake_runner = {
-        name = 'toggleterm',
-        opts = {
-          name = 'Main Terminal',
-          prefix_name = '[CMakeTools]: ',
-          split_direction = 'horizontal',
-          split_size = 11,
-          single_terminal_per_instance = true,
-          single_terminal_per_tab = true,
-          keep_terminal_static_location = true,
-          auto_resize = false,
-          start_insert = false,
-          focus = true,
-          do_not_add_newline = false,
+    'Shatur/neovim-tasks',
+    opts = {},
+    config = function()
+      local Path = require 'plenary.path'
+      require('tasks').setup {
+        default_params = {
+          cmake = {
+            cmd = 'cmake',
+            build_dir = tostring(Path:new('{cwd}', 'build', '{os}-{build_type}')),
+            build_type = 'Debug',
+            dap_name = 'lldb',
+            args = {
+              configure = { '-D', 'CMAKE_EXPORT_COMPILE_COMMANDS=1', '-G', 'Visual Studio 17 2022' },
+            },
+          },
         },
-      },
-    },
+        save_before_run = true,
+        params_file = 'neovim.json',
+        quickfix = {
+          pos = 'botright',
+          height = 12,
+        },
+        dap_open_command = function()
+          return require('dap').repl.open()
+        end,
+      }
+    end,
   },
 
   {
