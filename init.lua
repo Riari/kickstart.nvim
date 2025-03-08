@@ -365,6 +365,7 @@ require('lazy').setup({
         max_height = 100,
         on_open = function() end,
         on_close = function() end,
+        merge_duplicates = true,
         minimum_width = 50,
         fps = 30,
         top_down = true,
