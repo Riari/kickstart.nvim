@@ -204,14 +204,15 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
     },
+    -- TODO: uncomment below keymaps when they no longer cause errors
     config = function()
       local vstask = require('telescope').extensions.vstask
       vim.keymap.set('n', '<leader>ta', vstask.tasks)
       vim.keymap.set('n', '<leader>ti', vstask.inputs)
-      vim.keymap.set('n', '<leader>th', vstask.history)
+      -- vim.keymap.set('n', '<leader>th', vstask.history)
       vim.keymap.set('n', '<leader>tl', vstask.launch)
       vim.keymap.set('n', '<leader>tj', vstask.jobs)
-      vim.keymap.set('n', '<leader>t;', vstask.jobhistory)
+      -- vim.keymap.set('n', '<leader>t;', vstask.jobhistory)
     end,
   },
 
