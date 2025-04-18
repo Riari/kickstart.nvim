@@ -385,11 +385,11 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'mrded/nvim-lsp-notify',
-    requires = { 'rcarriga/nvim-notify' },
-    opts = {},
-  },
+  --{
+  --  'mrded/nvim-lsp-notify',
+  --  requires = { 'rcarriga/nvim-notify' },
+  --  opts = {},
+  --},
 
   {
     'numToStr/Comment.nvim',
@@ -583,7 +583,7 @@ require('lazy').setup({
 
   require 'plugins.lsp',
   require 'plugins.telescope',
-  require 'plugins.debug',
+  require 'plugins.dap',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
