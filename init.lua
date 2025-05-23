@@ -122,7 +122,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Diagnostics
+
+vim.diagnostic.config({
+  virtual_lines = {
+    current_line = true
+  }
+})
+
 -- Plugins
+
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
