@@ -563,6 +563,7 @@ require('lazy').setup({
   require 'plugins.lsp',
   require 'plugins.telescope',
   require 'plugins.dap',
+  require 'plugins.ai',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
