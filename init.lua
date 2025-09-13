@@ -8,16 +8,13 @@ vim.g.have_nerd_font = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-if vim.fn.has 'win32' == 1 then
-  vim.g.terminal_emulator = 'powershell'
-end
-
 -- Options
 
 vim.opt.background = 'dark'
 
 if (vim.fn.has 'win32') == 1 then
-  vim.opt.shell = 'bash'
+  vim.opt.shell = 'C:/Program Files/Git/bin/bash.exe'
+  vim.opt.shellcmdflag = '-s'
 end
 
 vim.opt.termguicolors = true
@@ -496,6 +493,7 @@ require('lazy').setup({
         return vim.o.columns * 0.3
       end,
       open_mapping = [[<c-\>]],
+      start_in_insert = true,
       direction = 'vertical',
       shading_factor = '0',
       shading_ratio = '0',
