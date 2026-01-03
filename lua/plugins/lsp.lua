@@ -126,10 +126,10 @@ return {
       },
     }
 
-    require('lspconfig')['gdscript'].setup {
+    vim.lsp.config('gdscript', {
       name = 'godot',
       cmd = { 'ncat', '127.0.0.1', '6005' },
-    }
+    })
 
     require('mason').setup()
 
