@@ -86,7 +86,9 @@ vim.keymap.set('n', '<A-2>', ':ToggleTerm 2<CR>')
 vim.keymap.set('n', '<A-3>', ':ToggleTerm 3<CR>')
 
 vim.keymap.set('n', '<leader>cc', ':Task start cmake configure<CR>')
+vim.keymap.set('n', '<leader>ct', ':Task set_module_param cmake target<CR>')
 vim.keymap.set('n', '<leader>cb', ':Task start cmake build<CR>')
+vim.keymap.set('n', '<leader>cB', ':Task start cmake build_all<CR>')
 vim.keymap.set('n', '<leader>cd', ':Task start cmake debug<CR>')
 vim.keymap.set('n', '<leader>cr', ':Task start cmake run<CR>')
 
