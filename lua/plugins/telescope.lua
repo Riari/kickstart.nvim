@@ -17,11 +17,11 @@ return {
     require('telescope').setup {
       defaults = {
         file_ignore_patterns = {
-          'node_modules',
-          'build',
-          'vcpkg',
-          '.git',
-          '.cache'
+          "node_modules/",
+          "build[/\\].*",
+          "vcpkg[/\\].*",
+          "%.git",
+          "%.cache"
         },
       },
       pickers = {
